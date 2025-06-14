@@ -1,5 +1,8 @@
-package com.example.lr1_rmp.fragment
+package com.example.lr1_rmp.view_registration_and_authorization.fragment
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +13,23 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.lr1_rmp.R
 import com.example.lr1_rmp.database.MainDb
+import com.example.lr1_rmp.view_main_page.MainPageActivity
 
 class AuthorizationFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_authorization, container, false)
+
+        val session: SharedPreferences
+        session = requireContext().getSharedPreferences("session", Context.MODE_PRIVATE)
+        val resultSession = session.getBoolean("session", false)
+
+        if (resultSession == true) {
+
+            GoToMainPageActivity()
+
+        }
 
         val DB = MainDb.getDb(requireContext())
 
@@ -40,22 +54,42 @@ class AuthorizationFragment : Fragment() {
 
                     if(result != null){
 
-                        val loginDB = result.userLogin
-                        val passwordDB = result.password
+                        val loginDB = result.user_login
+                        val passwordDB = result.user_pass
 
                         if (loginDB == login && passwordDB == password){
 
+                            view.post {
 
+                                Toast.makeText(requireContext(), "Успешная авторизация!", Toast.LENGTH_LONG).show()
+
+                                val editor = session.edit()
+                                editor.putBoolean("session", true)
+                                editor.putString("current_login_user", login)
+                                editor.apply()
+
+                                //TODO (Переход в основное окно)
+                                GoToMainPageActivity()
+
+                            }
 
                         } else {
 
-                            Toast.makeText(requireContext(), "Неверные логин или пароль!", Toast.LENGTH_LONG).show()
+                            view.post {
+
+                                Toast.makeText(requireContext(), "Неправильный логин или пароль!", Toast.LENGTH_LONG).show()
+
+                            }
 
                         }
 
                     } else {
 
-                        Toast.makeText(requireContext(), "Пользователь с таким именем не найден!", Toast.LENGTH_LONG).show()
+                        view.post {
+
+                            Toast.makeText(requireContext(), "Пользователь с таким именем не найден!", Toast.LENGTH_LONG).show()
+
+                        }
 
                     }
 
@@ -79,6 +113,13 @@ class AuthorizationFragment : Fragment() {
         }
 
         return view
+
+    }
+
+    fun GoToMainPageActivity(){
+
+        val intent: Intent = Intent(requireContext(), MainPageActivity::class.java)
+        startActivity(intent)
 
     }
 

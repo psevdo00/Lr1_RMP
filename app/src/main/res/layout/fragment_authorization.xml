@@ -1,14 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.AutorizationFragment">
+    tools:context=".view_registration_and_authorization.fragment.AuthorizationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Button
+        android:id="@+id/auth_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="55dp"
+        android:backgroundTint="@color/main_color"
+        android:text="Нет аккаунта? Зарегистрируйтесь!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintEnd_toEndOf="parent"
+        tools:layout_constraintStart_toStartOf="parent"
+        tools:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:layout_constraintVertical_bias="0.17000002" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/auth_login"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="Логин"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_button" />
+
+    <EditText
+        android:id="@+id/auth_password"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Пароль"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/auth_login"
+        app:layout_constraintStart_toStartOf="@+id/auth_login"
+        app:layout_constraintTop_toBottomOf="@+id/auth_login" />
+
+    <Button
+        android:id="@+id/authorization"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Авторизаваться!"
+        android:backgroundTint="@color/main_color"
+        app:layout_constraintEnd_toEndOf="@+id/auth_button"
+        app:layout_constraintStart_toStartOf="@+id/auth_button"
+        app:layout_constraintTop_toBottomOf="@+id/auth_password" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
